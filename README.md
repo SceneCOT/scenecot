@@ -20,3 +20,7 @@
     <img src="https://img.shields.io/badge/Data-SceneCOT-blue" alt="Data"></a>
 </div>
 &nbsp;
+
+<div align="middle">
+<img src="static/images/model_framework_v3_crop (1).jpg" width="85%" alt="LEO Teaser">
+</div>
