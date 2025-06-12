@@ -39,7 +39,7 @@ The reasoning chain mimics humans' recognition process: from high-level task rec
 
 
 ## 🔥 News
-- \[2024-9\] We released the [webpage](https://scenecot.github.io/) of SceneCOT.
+- \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT.
 
 ## 📝 TODO List
 
