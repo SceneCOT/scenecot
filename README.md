@@ -12,15 +12,39 @@
 &nbsp;
 
 <div align="center">
-    <a href="https://github.com/SceneCOT/scenecot" target="_blank" rel="external nofollow noopener">
+    <a href="https://github.com/SceneCOT/scenecot/tree/main/assets/paper" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Paper-arXiv-deepgreen" alt="Paper arXiv"></a>
     <a href="https://scenecot.github.io/" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Page-SceneCOT-9cf" alt="Project Page"></a>
     <a href="https://github.com/SceneCOT/scenecot" rel="external nofollow noopener" target="_blank">
-    <img src="https://img.shields.io/badge/Data-SceneCOT-blue" alt="Data"></a>
+    <img src="https://img.shields.io/badge/Data-SceneCOT212K-blue" alt="Data"></a>
 </div>
 &nbsp;
+<div align="middle">
+<img src="static/images/teaser_v3_crop.jpg" width="85%" alt="LEO Teaser">
+</div>
+<b>SceneCOT</b>: We propose a Chain-of-Thought reasoning method in 3D scenes (SceneCOT), decoupling a complex reasoning task into simpler and manageable problems, and building corresponding visual clues based on multimodal expert modules. To our knowledge, this is the first attempt to successfully implement the COT technique for achieving human-like step-by-step reasoning for 3D scene understanding, where we show great potential in extending it to a wider range of 3D scene understanding scenarios.
 
+### SceneCOT Framework
 <div align="middle">
 <img src="static/images/model_framework_v3_crop (1).jpg" width="85%" alt="LEO Teaser">
 </div>
+SceneCOT achieves great performance on SQA3D, MSQA, and Beacon3D benchmarks, demonstrating the effectiveness of our reasoning framework. Especially, our method significanlty enhances the performance on counting, the most challenging task in MSQA. Our method also significanlty outperforms previous methods by a large margin in Beacon3D.
+
+### Performance
+<div align="middle">
+<img src="static/images/main_results.png" width="85%" alt="LEO Teaser">
+</div>
+The reasoning chain mimics humans' recognition process: from high-level task recognition to low-level visual semantic understanding.
+
+
+## 🔥 News
+- \[2024-9\] We released the [webpage](https://scenecot.github.io/) of SceneCOT.
+
+## 📝 TODO List
+
+- [x] Evaluation code on SQA3D
+- [x] Evaluation code on all benchmarks
+- [x] Model weights
+- [x] SceneCOT-212K dataset
+- [x] Training code
