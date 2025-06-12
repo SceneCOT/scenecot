@@ -43,8 +43,8 @@ The reasoning chain mimics humans' recognition process: from high-level task rec
 
 ## 📝 TODO List
 
-- [x] Evaluation code on SQA3D
-- [x] Evaluation code on all benchmarks
-- [x] Model weights
-- [x] SceneCOT-212K dataset
-- [x] Training code
+- [ ] Evaluation code on SQA3D
+- [ ] Evaluation code on all benchmarks
+- [ ] Model weights
+- [ ] SceneCOT-212K dataset
+- [ ] Training code
