@@ -31,11 +31,6 @@
 </div>
 SceneCOT achieves great performance on SQA3D, MSQA, and Beacon3D benchmarks, demonstrating the effectiveness of our reasoning framework. Especially, our method significanlty enhances the performance on counting, the most challenging task in MSQA. Our method also significanlty outperforms previous methods by a large margin in Beacon3D.
 
-### Performance
-<div align="middle">
-<img src="static/images/main_results.png" width="85%" alt="LEO Teaser">
-</div>
-The reasoning chain mimics humans' recognition process: from high-level task recognition to low-level visual semantic understanding.
 
 
 ## 🔥 News
