@@ -29,7 +29,7 @@
 <div align="middle">
 <img src="static/images/model_framework_v3_crop (1).jpg" width="85%" alt="LEO Teaser">
 </div>
-SceneCOT achieves great performance on SQA3D, MSQA, and Beacon3D benchmarks, demonstrating the effectiveness of our reasoning framework. Especially, our method significanlty enhances the performance on counting, the most challenging task in MSQA. Our method also significanlty outperforms previous methods by a large margin in Beacon3D.
+SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the effectiveness of our reasoning framework. Especially, our method significanlty enhances the performance on counting, the most challenging task in MSQA. Our method also significanlty outperforms previous methods by a large margin in Beacon3D.
 
 
 
