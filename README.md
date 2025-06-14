@@ -38,8 +38,7 @@ SceneCOT achieves great performance on SQA3D, MSQA, and Beacon3D benchmarks, dem
 
 ## 📝 TODO List
 
-- [ ] Evaluation code on SQA3D
-- [ ] Evaluation code on all benchmarks
+- [ ] Evaluation code
 - [ ] Model weights
 - [ ] SceneCOT-212K dataset
 - [ ] Training code
