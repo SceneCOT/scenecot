@@ -17,7 +17,7 @@
     <a href="https://scenecot.github.io/" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Page-SceneCOT-9cf" alt="Project Page"></a>
     <a href="https://github.com/SceneCOT/scenecot" rel="external nofollow noopener" target="_blank">
-    <img src="https://img.shields.io/badge/Data-SceneCOT212K-blue" alt="Data"></a>
+    <img src="https://img.shields.io/badge/Data-SceneCOT200K-blue" alt="Data"></a>
 </div>
 &nbsp;
 <div align="middle">
