@@ -38,6 +38,7 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 
 ## 📝 TODO List
 
+- [ ] Arxiv paper
 - [ ] Evaluation code
 - [ ] Model weights
 - [ ] SceneCOT-212K dataset
