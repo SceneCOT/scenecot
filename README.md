@@ -12,7 +12,7 @@
 &nbsp;
 
 <div align="center">
-    <a href="https://github.com/SceneCOT/scenecot/tree/main/assets/paper" target="_blank" rel="external nofollow noopener">
+    <a href="https://arxiv.org/abs/2510.16714" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Paper-arXiv-deepgreen" alt="Paper arXiv"></a>
     <a href="https://scenecot.github.io/" target="_blank" rel="external nofollow noopener">
     <img src="https://img.shields.io/badge/Page-SceneCOT-9cf" alt="Project Page"></a>
@@ -43,3 +43,15 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 - [ ] Model weights
 - [ ] SceneCOT-185K dataset
 - [ ] Training code
+
+
+## BibTex
+If you find our work helpful, please consider citing us:
+```bibtex
+@article{linghu2025scenecot,
+  title={SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes},
+  author={Linghu, Xiongkun and Huang, Jiangyong and Zhu, Ziyu and Jia, Baoxiong and Huang, Siyuan},
+  journal={arXiv preprint arXiv:2510.16714},
+  year={2025}
+}
+```
