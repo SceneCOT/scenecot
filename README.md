@@ -1,5 +1,5 @@
 <h2 align="center">
-  <span><img src="static/images/logo-removebg-preview (1).png" width="4%" style="transform: translate(0,9px)"></span><b>SceneCOT: Eliciting Chain-of-Thought Reasoning in 3D Scenes</b>
+  <span><img src="static/images/logo-removebg-preview (1).png" width="4%" style="transform: translate(0,9px)"></span><b>SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes</b>
 </h2>
 
 <div align="center" margin-bottom="6em">
