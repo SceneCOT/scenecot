@@ -2,6 +2,10 @@
   <span><img src="static/images/logo-removebg-preview (1).png" width="4%" style="transform: translate(0,9px)"></span><b>SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes</b>
 </h2>
 
+<h3 align="center">
+ICLR 2026
+</h3>
+
 <div align="center" margin-bottom="6em">
 <a target="_blank" rel="external nofollow noopener" href="https://xiongkunlinghu.github.io/">Xiongkun Linghu</a>,
 <a target="_blank" rel="external nofollow noopener" href="https://huangjy-pku.github.io/">Jiangyong Huang</a>,
@@ -21,7 +25,7 @@
 </div>
 &nbsp;
 <div align="middle">
-<img src="static/images/teaser_v3_crop.jpg" width="85%" alt="LEO Teaser">
+<img src="static/images/teaser_v3_crop.jpg" width="85%" alt="SceneCOT Teaser">
 </div>
 <b>SceneCOT</b>: We propose a Chain-of-Thought reasoning method in 3D scenes (SceneCOT), decoupling a complex reasoning task into simpler and manageable problems, and building corresponding visual clues based on multimodal expert modules. To our knowledge, this is the first attempt to successfully implement the COT technique for achieving human-like step-by-step reasoning for 3D scene understanding, where we show great potential in extending it to a wider range of 3D scene understanding scenarios.
 
@@ -34,11 +38,12 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 
 
 ## 🔥 News
-- \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT.
+- \[2026-1\] SceneCOT is accepted by ICLR 2026
+- \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT
 
 ## 📝 TODO List
 
-- [ ] Arxiv paper
+- [x] Arxiv paper
 - [ ] Evaluation code
 - [ ] Model weights
 - [ ] SceneCOT-185K dataset
@@ -48,10 +53,10 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 ## BibTex
 If you find our work helpful, please consider citing us:
 ```bibtex
-@article{linghu2025scenecot,
+@inproceedings{linghu2026scenecot,
   title={SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes},
   author={Linghu, Xiongkun and Huang, Jiangyong and Zhu, Ziyu and Jia, Baoxiong and Huang, Siyuan},
-  journal={arXiv preprint arXiv:2510.16714},
-  year={2025}
+  booktitle={Proceedings of the International Conference on Learning Representations (ICLR)},
+  year={2026}
 }
 ```
