@@ -22,6 +22,8 @@ ICLR 2026
     <img src="https://img.shields.io/badge/Page-SceneCOT-9cf" alt="Project Page"></a>
     <a href="https://github.com/SceneCOT/scenecot" rel="external nofollow noopener" target="_blank">
     <img src="https://img.shields.io/badge/Data-SceneCOT185K-blue" alt="Data"></a>
+    <a href="https://huggingface.co/EricLHK/SceneCOT/tree/main" rel="external nofollow noopener" target="_blank">
+    <img src="https://img.shields.io/badge/Model-SceneCOT-pink" alt="Model"></a>
 </div>
 &nbsp;
 <div align="middle">
