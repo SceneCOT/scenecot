@@ -1,0 +1,6 @@
+from .msqa_eval_cot import MSQACOTEvaluator
+from .sqa3d_eval_cot import SQA3DCOTEvaluator
+from .gqa3d_eval_cot import GQA3DCOTEvaluator
+from .msqa_eval_cot_grounding import MSQACOTGroundingEvaluator
+from .sqa3d_eval_cot_grounding import SQA3DCOTGroundingEvaluator
+from .gqa3d_eval_cot_grounding import GQA3DCOTGroundingEvaluator

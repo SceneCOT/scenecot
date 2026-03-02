@@ -41,6 +41,8 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 - \[2026-1\] SceneCOT is accepted by ICLR 2026
 - \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT
 
+## 🚀 Get Started
+
 ## 📝 TODO List
 
 - [x] Arxiv paper
