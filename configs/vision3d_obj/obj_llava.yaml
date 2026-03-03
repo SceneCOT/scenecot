@@ -1,0 +1,25 @@
+name: LEO2_ObjectCentric
+hidden_dim: 1024
+obj_num: 150
+voxel_size: 0.2
+feat_type_3d: mpec
+feat_type_2d: clip_2d_to_3d
+feat_dim_3d:
+  mpec: 768
+feat_dim_2d:
+  openseg: 768
+  dinov2: 1024  # without resampling unknown performance
+  clip: 1024  # unknown performance
+  clip_2d_to_3d: 1024
+pos_embed_type: fourier
+resample: False
+max_num_voxels: 2560
+feat_dim_txt: ${llm.hidden_dim}
+num_queries: 60
+
+q_former:
+  num_attention_heads: 16
+  dim_feedforward: 4096
+  dropout: 0.1
+  activation: gelu
+  num_layers: 2

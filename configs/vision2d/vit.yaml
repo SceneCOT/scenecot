@@ -1,0 +1,8 @@
+name: GridFeatureExtractor2D
+backbone_name: vit
+backbone_pretrain_dataset: b_32_openai   # 2d feature extractor: clip-vit-large-patch14-336
+use_pretrain: True
+pooling: avg # null, avg, conv, attn
+freeze: True
+# local_checkpoint_path: /mnt/buffer/linghuxiongkun/conda_envs/hf_home/convnext_base_laion2b/open_clip_pytorch_model.bin
+# local_checkpoint_path: /mnt/buffer/linghuxiongkun/conda_envs/hf_home/openai/clip-vit-base-patch32/open_clip_pytorch_model.bin

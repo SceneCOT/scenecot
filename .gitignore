@@ -167,5 +167,5 @@ wandb/
 test.py
 test.ipynb
 
-*.yaml
+# *.yaml
 # *.sh

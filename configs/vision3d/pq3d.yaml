@@ -1,0 +1,93 @@
+name: PQ3D
+hidden_dim: 768
+use_embodied_token: True
+fourier_size: 84
+use_img_feat: True
+img_feat_dim: 768
+use_vox_feat: True
+vox_feat_dim: 768
+
+query3d_cfg:
+  model:
+    name: Query3DUnified
+    memories: [mv,pc,voxel,prompt]
+    hidden_size: ${vision3d.hidden_dim}
+    use_offline_voxel_fts: True
+    use_offline_attn_mask: False
+    skip_query_encoder_mask_pred: True
+    obj_loc:
+      spatial_dim: 5
+      dim_loc: 6
+      pairwise_rel_type: "center"
+    txt_encoder:
+      name: CLIPLanguageEncoder
+      args:
+        weights: ${data.pq3d_tokenizer_path}
+        use_projection: True
+        projection_type: "mlp"
+        num_projection_layers: 1
+    mv_encoder:
+      name: ObjectEncoder
+      args:
+        input_feat_size : ${vision3d.img_feat_dim}
+        hidden_size: 768
+        use_projection: True
+        dropout: 0.1
+        use_cls_head: False
+    voxel_encoder:
+      name: ObjectEncoder
+      args:
+        input_feat_size : ${vision3d.vox_feat_dim}
+        hidden_size: 768
+        use_projection: True
+        dropout: 0.1
+        use_cls_head: False
+    pc_encoder:
+      name: ObjectEncoder
+      args:
+        backbone: "pointnet++"
+        freeze_backbone: True
+        hidden_size: 768
+        dropout: 0.1
+        pretrained: /scratch/masaccio/code/query3d/pretrained_weights/pointnet_tokenizer.pth # TODO: set the pretrained checkpoint path for pointnet++ backbone
+        use_cls_head: False
+    unified_encoder:
+      name: "QueryMaskEncoder"
+      args:
+        hidden_size: 768
+        num_attention_heads: 12
+        num_layers: 4
+        spatial_selfattn: True
+        memories: [mv,pc,voxel,prompt] 
+        drop_memories_test: []
+        memory_dropout: 0.6
+        structure: "mixed"
+        use_self_mask: False
+        num_blocks: 1
+
+query3d_pretrain_path: /scratch/generalvision/zhuziyu/saved_models/scene-verse/all/stage2/pytorch_model.bin # TODO: set the pretrained checkpoint path for query3d, which is used for initializing the vision3d module in SceneCOTAgent
+
+
+# dummay keys to avoid errors in datasets.py
+voxel_size: 0.2
+feat_type_3d: mpec
+feat_type_2d: clip_2d_to_3d
+feat_dim_3d:
+  mpec: 768
+feat_dim_2d:
+  openseg: 768
+  dinov2: 1024  # without resampling unknown performance
+  clip: 1024  # unknown performance
+  clip_2d_to_3d: 1024
+pos_embed_type: fourier
+resample: False
+max_num_voxels: 2560
+feat_dim_txt: ${llm.hidden_dim}
+num_queries: 60
+
+q_former:
+  num_attention_heads: 16
+  dim_feedforward: 4096
+  dropout: 0.1
+  activation: gelu
+  num_layers: 2

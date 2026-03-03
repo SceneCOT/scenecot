@@ -1,0 +1,121 @@
+defaults:
+  - data: default
+  - task: scenecot_scanent_msqa_gqa3d
+  - llm: llava1.5-7b
+  - vision2d: vit
+  # - vision3d: vox_qformer_llava
+  - vision3d: pq3d
+  - vision3d_obj: obj_llava
+  - _self_
+
+# exp general info
+name: SceneCOT   # project name of wandb
+note: default   # run name of wandb
+
+rng_seed: 42
+num_gpu: 1   # will be overrided by launch.py
+mode: train
+naming_keywords: [note]   # choose keywords to feature the exp run dir
+base_dir: /share/generalvision/linghuxiongkun/projects/SceneCOT_dev # TODO: set the base dir for all exp runs
+exp_dir: ""   # temporarily empty, will be set by run.py as base_dir + name + *naming_keywords
+pretrained_ckpt_path: ""   # specified on launch
+
+logger:
+  name: wandb
+  entity: scaling-embodied-reasoning
+
+dataset_wrapper_args:
+  max_obj_len: 60
+  max_thought_img_num: 20
+
+model: LEOAgentCOT
+
+debug:
+  flag: False
+
+# grounding module
+grounding:
+  enable: False
+  hidden_dim: 4096
+  num_heads: 8
+  obj_mask_token_idx: 999
+  loss_type: infonce  # scores: similarity
+  grounding_module_type: 'concat'     
+  grd_loss_weight: 0.1
+  grd_only: False
+  grd_text_hidden_states: 'average_embedding'  # special_token or average_embedding
+  use_region_mask: False
+  unfreeze_llm_layer:
+    flag: False
+    unfreeze_layers_num: 4
+
+cot:
+  disable_cot: False
+  mask_obj_prob_loc_token: False
+  max_cot_obj_num: 30
+  cot_answer_training: False
+  use_oracle_obj_content: False
+  cot_no_scene_tokens: False
+  freeze_mm_projector: True
+  sqa3d_val_set_size: 500
+  gqa3d_val_set_size: 500
+  msr3d_val_set_size: 1000   # weigh the dataset val result
+
+
+train_vocabulary: False
+
+hf_home: /share/generalvision/linghuxiongkun/data/conda_envs/hf_home # TODO: set the huggingface cache dir for model and processor loading
+
+
+dataloader:
+  train:
+    batchsize: 2   # per-gpu batchsize
+    num_workers: 2
+  eval:
+    batchsize: 2   # per-gpu batchsize
+    num_workers: 2
+
+blind: False
+
+trainer: LeoTrainer
+training:
+  epochs: ${task.training.epochs}
+  gradient_accumulation_steps: 5
+  grad_norm: 5.0
+  optim:
+    name: AdamW
+    args:
+      lr: ${task.training.lr}
+      betas: [0.9, 0.999]
+      weight_decay: 0.05
+  schedule:
+    name: linear_warmup_cosine_decay
+    args:
+      warmup_steps: 400
+
+eval:
+  num_batch_val: 500
+  val_interval: 1
+
+# model misc
+clip_txt_guidance:
+  flag: False   # for eai
+  clip_out_dim: 1024
+
+# inference
+probe:
+  sources: [3rscan]
+  scene_ids: [0cac75d0-8d6f-2d13-8c26-d771a31c3f50]
+  situations: ""
+  instructions: [Describe this scene.]
+  save_scene_tokens: True
+
+# img processor
+img_processer_type: 'openai/clip-vit-large-patch14-336'
+
+# moe settings
+moe:
+  enable: False
+  expert1_path: ""
+  expert2_path: ""
+  expert1_trigger_types: ["counting", "existence"]

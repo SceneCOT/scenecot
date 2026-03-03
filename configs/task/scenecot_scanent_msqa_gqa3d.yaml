@@ -1,0 +1,39 @@
+# train
+training:
+  lr: 3e-5
+  epochs: 5
+
+leomix:
+  LeoMix:
+    mode: [train]
+    debug_size: 100
+    mix:
+      qacot:
+        scannet: [gqa3d, msr3d]
+    ratio: 1.0
+    dataset_wrapper: LeoObjPadDatasetWrapper2
+    dataset_wrapper_args: ${dataset_wrapper_args}
+    train_dataloader_args: ${dataloader.train}
+    eval_dataloader_args: ${dataloader.eval}
+
+# eval
+task_metrics_weights:
+  qacot: 1.0
+
+qacot:
+
+  QACOTScanNetMSR3D:
+    dataset_weight: 0.7
+    mode: [val, test]
+    dataset_wrapper: LeoObjPadDatasetWrapper2
+    dataset_wrapper_args: ${dataset_wrapper_args}
+    eval_dataloader_args: ${dataloader.eval}
+    evaluator: MSQACOTEvaluator
+
+  QACOTScanNetGQA3D:
+    dataset_weight: 0.3
+    mode: [val, test]
+    dataset_wrapper: LeoObjPadDatasetWrapper2
+    dataset_wrapper_args: ${dataset_wrapper_args}
+    eval_dataloader_args: ${dataloader.eval}
+    evaluator: GQA3DCOTEvaluator
