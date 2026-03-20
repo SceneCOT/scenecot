@@ -1,0 +1,11 @@
+gpt_model: gpt-4o-2024-11-20
+api_key: ''
+api_version: "azure"
+region: 'northcentralus'
+gpt_score_prompt_path:  ${evaluation_assets}MSQA_eval_prompt.json
+data_eval_base: ""   # rooth path where the evaluation results are stored
+result_dir: ${data_eval_base}
+evaluate_dataset: ['QACOTScanNetMSR3D']
+gpt_score_flag: True
+evaluated_models: ['']  # model name
+testset_mapping_path: ${evaluation_assets}/testset_mapping.json

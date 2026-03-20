@@ -1,9 +1,9 @@
-sceneverse_base: /share/generalvision/linghuxiongkun/data/SceneCOT/SceneVerse
+sceneverse_base: /share/generalvision/linghuxiongkun/data/SceneCOT/SceneVerse # TODO
 cot_annotation_base: /share/generalvision/linghuxiongkun/data/SceneCOT/leo2-cot
 
 mmscan_inst_mask_base: /scratch2/generalvision/huangjiangyong/mmscan_instance_masks
 
-scan_family_base: /scratch/masaccio/existing_datasets/scannet
+scan_family_base: /scratch/masaccio/existing_datasets/scannet # TODO 
 
 obj_feat_2d_base:
   ScanNet: /share/generalvision/linghuxiongkun/data/scene_data/LEO-2_feature/ScanNet
@@ -14,12 +14,12 @@ obj_vox_feat_dim: 768
 obj_feat_base:
   ScanNet: /scratch/generalvision/zhuziyu/scene-verse-pred-all/ScanNet
 
-obj_img_base:
+obj_img_base:   # TODO
   ScanNet: /share/generalvision/linghuxiongkun/data/SceneCOT/scenecot_imgs/imgs/scannet
 
 img_size: [224, 224]
 
-pq3d_tokenizer_path: /share/generalvision/linghuxiongkun/data/cache_models/huggingface_cache_model/clip-vit-large-patch14
+pq3d_tokenizer_path: /share/generalvision/linghuxiongkun/data/cache_models/huggingface_cache_model/clip-vit-large-patch14  # TODO 
 
 qa:
   scanqa:

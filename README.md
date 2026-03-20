@@ -45,14 +45,72 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 - \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT
 
 ## 🚀 Get Started
+1. Clone Github repo.
+```shell
+git clone https://github.com/SceneCOT/scenecot
+```
+
+2. Create `conda` environment and install dependencies.
+```shell
+conda create -n scenecot python=3.9
+conda activate scenecot
+
+# install PyTorch, take our version for example
+conda install pytorch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1  pytorch-cuda=11.8 -c pytorch -c nvidia
+
+# install other dependencies with pip
+pip install -r requirements.txt
+```
+
+3. Install third party libraries (for point cloud backbones). Installation failure may occur for `PointNext`, resulting in error when importing `PointNext`. If this happens, there are two solutions: 1) comment out the line of importing `PointNext`, or 2) download the [compiled file](https://huggingface.co/datasets/huangjy-pku/LEO_data/blob/main/pointnet2_batch_cuda.cpython-39-x86_64-linux-gnu.so) and place it at `model/pointnext/cpp/pointnet2_batch/`.
+
+```shell
+# install spconv
+pip install spconv-cu118
+
+# install third-party modules
+cd model
+
+# PointNet++
+cd pointnetpp
+python setup.py install
+cd ..
+
+# sanity check
+cd ..
+PointNet++: python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
+```
+
+## 📁 Prepare data and pretrained models
+
+1. Download the dataset and the corresponding files from [data](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main).
+2. Download the model checkpoints from [models](https://huggingface.co/EricLHK/SceneCOT/tree/main).
+
+## 🕹 Training and evaluation
+SceneCOT model training:
+```
+sh scripts/train/full_training_msqa_gqa3d.sh
+```
+
+SceneCOT model evaluation:
+```
+sh scripts/test/full_training_msqa_beacon3d_test_moe.sh
+```
+
+## 📊 Offline evaluation
+MSQA evaluation:
+
+You should first download the prompt and mapping file from [evaluation_assets](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main/evaluation_assets). Then set the path of `evaluation_assets` in `evaluator/msqa/configs.yaml` and other paths.
+
+Then run: `evaluator/msqa_evaluator_offline.py`
 
 ## 📝 TODO List
 
 - [x] Arxiv paper
-- [ ] Evaluation code
+- [x] Evaluation code
 - [x] Training code
-- [ ] Model weights
-- [ ] SceneCOT-185K dataset
+- [x] Model weights
+- [x] SceneCOT-185K dataset
 
 
 ## BibTex
