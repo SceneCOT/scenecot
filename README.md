@@ -40,6 +40,7 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 
 
 ## 🔥 News
+- \[2026-3\] Evaluation code, model checkpoints, detailed installation instruction have been released
 - \[2026-3\] We release training code
 - \[2026-1\] SceneCOT is accepted by ICLR 2026
 - \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT
@@ -93,6 +94,8 @@ The configs were updated to avoid machine-specific absolute paths. We recommend 
 | `SCENECOT_PQ3D_TOKENIZER_PATH` | PQ3D text tokenizer path (override, `data.pq3d_tokenizer_path`) | `${SCENECOT_MODEL_ROOT}/clip-vit-large-patch14` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 | `SCENECOT_POINTNET_TOKENIZER_PATH` | PQ3D PointNet++ tokenizer checkpoint (override) | `${SCENECOT_MODEL_ROOT}/pointnet_tokenizer.pth` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 | `SCENECOT_QUERY3D_PRETRAIN_PATH` | PQ3D/SceneVerse pretrain checkpoint (override) | `${SCENECOT_MODEL_ROOT}/query3d_pretrain.bin` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_EXPERT1_PATH` | MOE expert-1 checkpoint directory (override) | `${SCENECOT_MODEL_ROOT}/expert1_checkpoint0` | [SceneCOT model repo (checkpoint dirs)](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_EXPERT2_PATH` | MOE expert-2 checkpoint directory (override) | `${SCENECOT_MODEL_ROOT}/expert2_best.pth` | [SceneCOT model repo (checkpoint dirs)](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 
 Example:
 ```shell
@@ -105,6 +108,8 @@ export SCENECOT_MODEL_ROOT=/path/to/model_assets
 # export SCENECOT_LLM_PATH=/path/to/model_assets/llava-v1.5-7b
 # export SCENECOT_VISION_TOWER_PATH=/path/to/model_assets/clip-vit-large-patch14-336
 # export SCENECOT_PQ3D_TOKENIZER_PATH=/path/to/model_assets/clip-vit-large-patch14
+# export SCENECOT_EXPERT1_PATH=/path/to/model_assets/expert1_checkpoint0
+# export SCENECOT_EXPERT2_PATH=/path/to/model_assets/expert2_best.pth
 ```
 
 ## 📦 Pretrained weights
@@ -114,6 +119,20 @@ To reproduce paper-level performance, the following checkpoints are needed:
 1. SceneCOT experts (released): [SceneCOT model repo](https://huggingface.co/EricLHK/SceneCOT/tree/main)
 2. PQ3D PointNet++ tokenizer (`pointnet_tokenizer.pth`) → set `SCENECOT_POINTNET_TOKENIZER_PATH`
 3. Query3D/SceneVerse pretrain (`pytorch_model.bin`) → set `SCENECOT_QUERY3D_PRETRAIN_PATH`
+
+For MOE evaluation, expert checkpoints are expected as directories under `SCENECOT_MODEL_ROOT`:
+
+```text
+${SCENECOT_MODEL_ROOT}/
+├── expert1_checkpoint0/
+│   └── pytorch_model.bin (or model.safetensors)
+└── expert2_best.pth/
+  └── pytorch_model.bin (or model.safetensors)
+```
+
+These map to:
+- `moe.expert1_path` → `${SCENECOT_MODEL_ROOT}/expert1_checkpoint0` (or `SCENECOT_EXPERT1_PATH`)
+- `moe.expert2_path` → `${SCENECOT_MODEL_ROOT}/expert2_best.pth` (or `SCENECOT_EXPERT2_PATH`)
 
 By default, 2/3 are resolved under `SCENECOT_MODEL_ROOT`. If files are absent, related modules are initialized without those pretrained weights, which may significantly affect final metrics.
 

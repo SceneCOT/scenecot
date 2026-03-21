@@ -116,6 +116,6 @@ img_processer_type: 'openai/clip-vit-large-patch14-336'
 # moe settings
 moe:
   enable: False
-  expert1_path: ""
-  expert2_path: ""
+  expert1_path: ${oc.env:SCENECOT_EXPERT1_PATH,${oc.env:SCENECOT_MODEL_ROOT,./model_assets}/expert1_checkpoint0}
+  expert2_path: ${oc.env:SCENECOT_EXPERT2_PATH,${oc.env:SCENECOT_MODEL_ROOT,./model_assets}/expert2_best.pth}
   expert1_trigger_types: ["counting", "existence"]
