@@ -92,7 +92,7 @@ The configs were updated to avoid machine-specific absolute paths. We recommend 
 | `SCENECOT_VISION_TOWER_PATH` | CLIP vision tower path (override) | `${SCENECOT_MODEL_ROOT}/clip-vit-large-patch14-336` | [CLIP ViT-L/14-336](https://huggingface.co/openai/clip-vit-large-patch14-336) |
 | `SCENECOT_PQ3D_TOKENIZER_PATH` | PQ3D text tokenizer path (override, `data.pq3d_tokenizer_path`) | `${SCENECOT_MODEL_ROOT}/clip-vit-large-patch14` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 | `SCENECOT_POINTNET_TOKENIZER_PATH` | PQ3D PointNet++ tokenizer checkpoint (override) | `${SCENECOT_MODEL_ROOT}/pointnet_tokenizer.pth` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
-| `SCENECOT_QUERY3D_PRETRAIN_PATH` | Query3D/SceneVerse pretrain checkpoint (override) | `${SCENECOT_MODEL_ROOT}/query3d_pretrain.bin` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_QUERY3D_PRETRAIN_PATH` | PQ3D/SceneVerse pretrain checkpoint (override) | `${SCENECOT_MODEL_ROOT}/query3d_pretrain.bin` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 
 Example:
 ```shell

@@ -190,7 +190,7 @@ class MSQAEvaluator():
         metric_type_list = []
         result_dict = {}
         result_dir = self.cfg.result_dir
-        # result_dir = "/mnt/fillipo/linghu/Situated_Scene_Understanding/eval_results/refined_data_baseline_NIPS/NIPS_pretrain_refined_data_balanced_3_dataset/eval_results/scannet"
+
         file_tag = 'with_gpt_score' if self.cfg.gpt_score_flag else 'without_gpt_score'
         if file_tag == 'with_gpt_score':
             metric_type_list.append('gpt_score')
