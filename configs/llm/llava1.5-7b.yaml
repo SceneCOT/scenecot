@@ -1,5 +1,5 @@
 name: LLaVA1.5-7B
-cfg_path: /share/generalvision/huangjiangyong/pretrained_weights/llava-v1.5-7b # TODO: set the config path for this exp, which should be the path of this yaml file
+cfg_path: ${oc.env:SCENECOT_LLM_PATH,liuhaotian/llava-v1.5-7b}
 truncation_side: right
 max_context_len: 256
 max_out_len: 512
@@ -11,5 +11,4 @@ lora:
   target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
   dropout: 0.0
 
-# vision_model_path: openai/clip-vit-large-patch14-336
-vision_model_path: /share/generalvision/linghuxiongkun/data/cache_models/huggingface_cache_model/models--openai--clip-vit-large-patch14-336/snapshots/ce19dc912ca5cd21c8a653c79e251e808ccabcd1 # TODO set the vision model path, which is used for extracting image features for training and evaluation
+vision_model_path: ${oc.env:SCENECOT_VISION_TOWER_PATH,openai/clip-vit-large-patch14-336}

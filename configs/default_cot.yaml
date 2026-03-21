@@ -16,7 +16,7 @@ rng_seed: 42
 num_gpu: 1   # will be overrided by launch.py
 mode: train
 naming_keywords: [note]   # choose keywords to feature the exp run dir
-base_dir: /share/generalvision/linghuxiongkun/projects/SceneCOT_dev # TODO: set the base dir for all exp runs
+base_dir: ${oc.env:SCENECOT_EXP_ROOT,./outputs} # root directory for experiment outputs
 exp_dir: ""   # temporarily empty, will be set by run.py as base_dir + name + *naming_keywords
 pretrained_ckpt_path: ""   # specified on launch
 
@@ -64,7 +64,7 @@ cot:
 
 train_vocabulary: False
 
-hf_home: /share/generalvision/linghuxiongkun/data/conda_envs/hf_home # TODO: set the huggingface cache dir for model and processor loading
+hf_home: ${oc.env:HF_HOME,./.cache/huggingface} # huggingface cache directory
 
 
 dataloader:

@@ -45,64 +45,123 @@ SceneCOT achieves great performance on MSQA, and Beacon3D, demonstrating the eff
 - \[2025-6\] We released the [webpage](https://scenecot.github.io/) of SceneCOT
 
 ## 🚀 Get Started
-1. Clone Github repo.
+
+1. Clone the repository.
 ```shell
 git clone https://github.com/SceneCOT/scenecot
+cd scenecot
 ```
 
-2. Create `conda` environment and install dependencies.
+2. Create a Python environment and install dependencies.
 ```shell
 conda create -n scenecot python=3.9
 conda activate scenecot
 
-# install PyTorch, take our version for example
-conda install pytorch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1  pytorch-cuda=11.8 -c pytorch -c nvidia
+# PyTorch (example tested version)
+conda install pytorch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 pytorch-cuda=11.8 -c pytorch -c nvidia
 
-# install other dependencies with pip
+# project dependencies
 pip install -r requirements.txt
 ```
 
-3. Install third party libraries (for point cloud backbones). Installation failure may occur for `PointNext`, resulting in error when importing `PointNext`. If this happens, there are two solutions: 1) comment out the line of importing `PointNext`, or 2) download the [compiled file](https://huggingface.co/datasets/huangjy-pku/LEO_data/blob/main/pointnet2_batch_cuda.cpython-39-x86_64-linux-gnu.so) and place it at `model/pointnext/cpp/pointnet2_batch/`.
-
+3. Install point-cloud third-party modules.
 ```shell
-# install spconv
 pip install spconv-cu118
 
-# install third-party modules
-cd model
-
-# PointNet++
-cd pointnetpp
+cd model/pointnetpp
 python setup.py install
-cd ..
+cd ../..
 
 # sanity check
-cd ..
-PointNet++: python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
+python -c 'from model.pointnetpp.pointnetpp import PointNetPP'
 ```
 
-## 📁 Prepare data and pretrained models
+If `PointNext` build/import fails, either disable `PointNext` usage or place the compiled file from [LEO_data](https://huggingface.co/datasets/huangjy-pku/LEO_data/blob/main/pointnet2_batch_cuda.cpython-39-x86_64-linux-gnu.so) under `model/pointnext/cpp/pointnet2_batch/`.
 
-1. Download the dataset and the corresponding files from [data](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main).
-2. Download the model checkpoints from [models](https://huggingface.co/EricLHK/SceneCOT/tree/main).
+## 🔧 Reproducibility configuration
+
+The configs were updated to avoid machine-specific absolute paths. We recommend setting the following environment variables:
+
+| Variable | Purpose | Default |
+|---|---|---|
+| `SCENECOT_EXP_ROOT` | experiment output root (`cfg.base_dir`) | `./outputs` |
+| `HF_HOME` | Hugging Face cache root (`cfg.hf_home`) | `./.cache/huggingface` |
+| `SCENECOT_LLM_PATH` | LLaVA model path or HF model id | `liuhaotian/llava-v1.5-7b` |
+| `SCENECOT_VISION_TOWER_PATH` | CLIP vision tower path or HF model id | `openai/clip-vit-large-patch14-336` |
+| `SCENECOT_POINTNET_TOKENIZER_PATH` | PQ3D PointNet++ tokenizer checkpoint | empty |
+| `SCENECOT_QUERY3D_PRETRAIN_PATH` | Query3D/SceneVerse pretrain checkpoint | empty |
+
+Example:
+```shell
+export SCENECOT_EXP_ROOT=/path/to/experiments
+export HF_HOME=/path/to/hf_cache
+export SCENECOT_LLM_PATH=liuhaotian/llava-v1.5-7b
+export SCENECOT_VISION_TOWER_PATH=openai/clip-vit-large-patch14-336
+```
+
+## 📦 Pretrained weights
+
+To reproduce paper-level performance, the following checkpoints are needed:
+
+1. SceneCOT experts (released): [SceneCOT model repo](https://huggingface.co/EricLHK/SceneCOT/tree/main)
+2. PQ3D PointNet++ tokenizer (`pointnet_tokenizer.pth`) → set `SCENECOT_POINTNET_TOKENIZER_PATH`
+3. Query3D/SceneVerse pretrain (`pytorch_model.bin`) → set `SCENECOT_QUERY3D_PRETRAIN_PATH`
+
+If 2/3 are unset, related modules are initialized without those pretrained weights, which may significantly affect final metrics.
+
+## 🌐 External services
+
+### Weights & Biases
+
+Tracking is enabled by default. For evaluation-only/offline runs without login:
+```shell
+export WANDB_MODE=disabled
+```
+
+### Hugging Face access
+
+If direct access to `huggingface.co` is restricted, set a mirror endpoint and keep a local cache:
+```shell
+export HF_ENDPOINT=https://your-hf-mirror
+export HF_HOME=/path/to/hf_cache
+```
+
+## 📁 Data preparation
+
+1. Download released dataset assets from [SceneCOT dataset](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main).
+2. Download released checkpoints from [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main).
+3. Ensure 3D point-cloud assets required by your selected task/evaluator are present (for PQ3D-based runs, missing point cloud files will break full reproduction).
 
 ## 🕹 Training and evaluation
-SceneCOT model training:
-```
+
+Training:
+```shell
 sh scripts/train/full_training_msqa_gqa3d.sh
 ```
 
-SceneCOT model evaluation:
-```
+Evaluation (MOE test script):
+```shell
 sh scripts/test/full_training_msqa_beacon3d_test_moe.sh
 ```
 
 ## 📊 Offline evaluation
-MSQA evaluation:
 
-You should first download the prompt and mapping file from [evaluation_assets](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main/evaluation_assets). Then set the path of `evaluation_assets` in `evaluator/msqa/configs.yaml` and other paths.
+1. Download `evaluation_assets` from [HF evaluation assets](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main/evaluation_assets).
+2. Set optional variables:
+```shell
+export SCENECOT_EVAL_ASSETS=/path/to/evaluation_assets
+export SCENECOT_EVAL_ROOT=/path/to/experiments
+```
+3. Run:
+```shell
+python evaluator/msqa_evaluator_offline.py
+```
 
-Then run: `evaluator/msqa_evaluator_offline.py`
+Expected prediction files are read from:
+
+`{result_dir}/{model_name}/eval_results/{dataset_name}/results.json` (or `results.pt`)
+
+where `result_dir` defaults to `SCENECOT_EVAL_ROOT`.
 
 ## 📝 TODO List
 

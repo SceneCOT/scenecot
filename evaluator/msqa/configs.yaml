@@ -2,8 +2,9 @@ gpt_model: gpt-4o-2024-11-20
 api_key: ''
 api_version: "azure"
 region: 'northcentralus'
-gpt_score_prompt_path:  ${evaluation_assets}MSQA_eval_prompt.json
-data_eval_base: ""   # rooth path where the evaluation results are stored
+evaluation_assets: ${oc.env:SCENECOT_EVAL_ASSETS,./evaluation_assets}
+gpt_score_prompt_path: ${evaluation_assets}/MSQA_eval_prompt.json
+data_eval_base: ${oc.env:SCENECOT_EVAL_ROOT,./outputs}   # root path where evaluation results are stored
 result_dir: ${data_eval_base}
 evaluate_dataset: ['QACOTScanNetMSR3D']
 gpt_score_flag: True

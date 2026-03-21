@@ -305,7 +305,7 @@ def evaluate_execute(cfg):
     msqaevaluator = MSQAEvaluator(cfg)
     msqaevaluator.eval_metrics()
 
-@hydra.main(version_base=None, config_path="/home/lhxk/workspace/repos/Situated-3D-Scene-Understanding-Data-Generation/evaluator/msqa_challenge", config_name="configs")
+@hydra.main(version_base=None, config_path="msqa", config_name="configs")
 def main(cfg):
     OmegaConf.set_struct(cfg, False)
     evaluate_execute(cfg) 

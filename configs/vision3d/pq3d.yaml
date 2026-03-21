@@ -49,7 +49,7 @@ query3d_cfg:
         freeze_backbone: True
         hidden_size: 768
         dropout: 0.1
-        pretrained: /scratch/masaccio/code/query3d/pretrained_weights/pointnet_tokenizer.pth # TODO: set the pretrained checkpoint path for pointnet++ backbone
+        pretrained: ${oc.env:SCENECOT_POINTNET_TOKENIZER_PATH,} # optional path to PointNet++ tokenizer checkpoint
         use_cls_head: False
     unified_encoder:
       name: "QueryMaskEncoder"
@@ -65,7 +65,7 @@ query3d_cfg:
         use_self_mask: False
         num_blocks: 1
 
-query3d_pretrain_path: /scratch/generalvision/zhuziyu/saved_models/scene-verse/all/stage2/pytorch_model.bin # TODO: set the pretrained checkpoint path for query3d, which is used for initializing the vision3d module in SceneCOTAgent
+query3d_pretrain_path: ${oc.env:SCENECOT_QUERY3D_PRETRAIN_PATH,} # optional path to Query3D/SceneVerse pretrain checkpoint
 
 
 # dummay keys to avoid errors in datasets.py

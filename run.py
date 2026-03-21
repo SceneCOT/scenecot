@@ -30,8 +30,10 @@ logger = get_logger(__name__)
 @hydra.main(config_path='configs', config_name='default', version_base=None)
 def main(cfg):
     os.environ['TOKENIZERS_PARALLELISM'] = 'true'   # suppress hf tokenizer warning
-    # if 'hf_home' in cfg:
-    #     os.environ["HUGGINGFACE_HUB_CACHE"] = cfg.hf_home
+    if 'hf_home' in cfg and cfg.hf_home:
+        os.environ["HF_HOME"] = cfg.hf_home
+        os.environ["HUGGINGFACE_HUB_CACHE"] = cfg.hf_home
+        os.environ["TRANSFORMERS_CACHE"] = cfg.hf_home
     naming_keys = [cfg.name]
     for name in cfg.naming_keywords:
         key = str(rgetattr(cfg, name))
