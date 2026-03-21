@@ -1,5 +1,5 @@
 name: LLaVA1.5-7B
-cfg_path: ${oc.env:SCENECOT_LLM_PATH,liuhaotian/llava-v1.5-7b}
+cfg_path: ${oc.env:SCENECOT_LLM_PATH,${oc.env:SCENECOT_MODEL_ROOT,./model_assets}/llava-v1.5-7b}
 truncation_side: right
 max_context_len: 256
 max_out_len: 512
@@ -11,4 +11,4 @@ lora:
   target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
   dropout: 0.0
 
-vision_model_path: ${oc.env:SCENECOT_VISION_TOWER_PATH,openai/clip-vit-large-patch14-336}
+vision_model_path: ${oc.env:SCENECOT_VISION_TOWER_PATH,${oc.env:SCENECOT_MODEL_ROOT,./model_assets}/clip-vit-large-patch14-336}

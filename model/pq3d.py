@@ -1,4 +1,5 @@
 import math
+import os
 from contextlib import nullcontext
 from copy import copy, deepcopy
 from functools import partial
@@ -275,7 +276,7 @@ class ObjectEncoder(nn.Module):
 
         # load weights
         self.apply(_init_weights_bert)
-        if pretrained:
+        if pretrained and os.path.exists(pretrained):
             logger.info(f"PQ3D ObjectEncoder: load pretrained weights from {pretrained}")
             pre_state_dict = torch.load(pretrained, weights_only=True)
             state_dict = {}
@@ -288,6 +289,8 @@ class ObjectEncoder(nn.Module):
                 state_dict[k] = v
             warning = self.load_state_dict(state_dict, strict=False)
             logger.info(warning)
+        elif pretrained:
+            logger.warning(f"PQ3D ObjectEncoder: pretrained weights not found at {pretrained}, skip loading")
         # freeze backbone
         if self.freeze_backbone:
             for param in self.backbone.parameters():

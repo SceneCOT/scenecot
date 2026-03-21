@@ -1,4 +1,24 @@
 #!/bin/bash
+
+# ------------------------------
+# Reproducibility env settings
+# ------------------------------
+export SCENECOT_EXP_ROOT=${SCENECOT_EXP_ROOT:-./outputs}
+export SCENECOT_DATA_ROOT=${SCENECOT_DATA_ROOT:-./data_assets}
+export HF_HOME=${HF_HOME:-./.cache/huggingface}
+
+# model sources
+export SCENECOT_LLM_PATH=${SCENECOT_LLM_PATH:-liuhaotian/llava-v1.5-7b}
+export SCENECOT_VISION_TOWER_PATH=${SCENECOT_VISION_TOWER_PATH:-openai/clip-vit-large-patch14-336}
+export SCENECOT_PQ3D_TOKENIZER_PATH=${SCENECOT_PQ3D_TOKENIZER_PATH:-openai/clip-vit-large-patch14}
+
+# optional PQ3D checkpoints
+export SCENECOT_POINTNET_TOKENIZER_PATH=${SCENECOT_POINTNET_TOKENIZER_PATH:-}
+export SCENECOT_QUERY3D_PRETRAIN_PATH=${SCENECOT_QUERY3D_PRETRAIN_PATH:-}
+
+# optional logging mode (set to online if needed)
+export WANDB_MODE=${WANDB_MODE:-disabled}
+
 CUDA_LAUNCH_BLOCKING=1 python launch.py --name scene_cot \
                  --qos lv0b \
                  --mem_per_gpu 100 \
@@ -36,8 +56,8 @@ CUDA_LAUNCH_BLOCKING=1 python launch.py --name scene_cot \
                 data.cotqa.gqa3d.pc_type=gt \
                 data.nms_iou_threshold=1 \
                 data.cotqa.use_pred_for_train=False \
-                data.cotqa.msr3d.anno_dir=/share/generalvision/linghuxiongkun/data/SceneCOT/msqa/scannet/pure_txt/cot_data/full_set/improve_type_counting \
-                data.cotqa.gqa3d.anno_dir=/share/generalvision/linghuxiongkun/data/SceneCOT/leo2-cot/cotqa/gqa3d \
+                data.cotqa.msr3d.anno_dir=${SCENECOT_DATA_ROOT}/msqa/scannet/pure_txt/cot_data/full_set/improve_type_counting \
+                data.cotqa.gqa3d.anno_dir=${SCENECOT_DATA_ROOT}/leo2-cot/cotqa/gqa3d \
                 dataloader.train.batchsize=2 \
                 dataloader.eval.batchsize=2 \
                 dataloader.eval.num_workers=1

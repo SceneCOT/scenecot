@@ -82,21 +82,29 @@ If `PointNext` build/import fails, either disable `PointNext` usage or place the
 
 The configs were updated to avoid machine-specific absolute paths. We recommend setting the following environment variables:
 
-| Variable | Purpose | Default |
-|---|---|---|
-| `SCENECOT_EXP_ROOT` | experiment output root (`cfg.base_dir`) | `./outputs` |
-| `HF_HOME` | Hugging Face cache root (`cfg.hf_home`) | `./.cache/huggingface` |
-| `SCENECOT_LLM_PATH` | LLaVA model path or HF model id | `liuhaotian/llava-v1.5-7b` |
-| `SCENECOT_VISION_TOWER_PATH` | CLIP vision tower path or HF model id | `openai/clip-vit-large-patch14-336` |
-| `SCENECOT_POINTNET_TOKENIZER_PATH` | PQ3D PointNet++ tokenizer checkpoint | empty |
-| `SCENECOT_QUERY3D_PRETRAIN_PATH` | Query3D/SceneVerse pretrain checkpoint | empty |
+| Variable | Purpose | Default | Download / Source Link |
+|---|---|---|---|
+| `SCENECOT_EXP_ROOT` | experiment output root (`cfg.base_dir`) | `./outputs` | - |
+| `SCENECOT_DATA_ROOT` | root directory for dataset/assets used by [configs/data/default.yaml](configs/data/default.yaml) | `./data_assets` | [SceneCOT dataset](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main) |
+| `HF_HOME` | Hugging Face cache root (`cfg.hf_home`) | `./.cache/huggingface` | [Hugging Face Hub](https://huggingface.co/) |
+| `SCENECOT_MODEL_ROOT` | unified root directory for default model/checkpoint paths | `./model_assets` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_LLM_PATH` | LLaVA model path (override) | `${SCENECOT_MODEL_ROOT}/llava-v1.5-7b` | [LLaVA-1.5-7B](https://huggingface.co/liuhaotian/llava-v1.5-7b) |
+| `SCENECOT_VISION_TOWER_PATH` | CLIP vision tower path (override) | `${SCENECOT_MODEL_ROOT}/clip-vit-large-patch14-336` | [CLIP ViT-L/14-336](https://huggingface.co/openai/clip-vit-large-patch14-336) |
+| `SCENECOT_PQ3D_TOKENIZER_PATH` | PQ3D text tokenizer path (override, `data.pq3d_tokenizer_path`) | `${SCENECOT_MODEL_ROOT}/clip-vit-large-patch14` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_POINTNET_TOKENIZER_PATH` | PQ3D PointNet++ tokenizer checkpoint (override) | `${SCENECOT_MODEL_ROOT}/pointnet_tokenizer.pth` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_QUERY3D_PRETRAIN_PATH` | Query3D/SceneVerse pretrain checkpoint (override) | `${SCENECOT_MODEL_ROOT}/query3d_pretrain.bin` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 
 Example:
 ```shell
 export SCENECOT_EXP_ROOT=/path/to/experiments
+export SCENECOT_DATA_ROOT=/path/to/data_assets
 export HF_HOME=/path/to/hf_cache
-export SCENECOT_LLM_PATH=liuhaotian/llava-v1.5-7b
-export SCENECOT_VISION_TOWER_PATH=openai/clip-vit-large-patch14-336
+export SCENECOT_MODEL_ROOT=/path/to/model_assets
+
+# Optional explicit overrides when using non-default file names/locations
+# export SCENECOT_LLM_PATH=/path/to/model_assets/llava-v1.5-7b
+# export SCENECOT_VISION_TOWER_PATH=/path/to/model_assets/clip-vit-large-patch14-336
+# export SCENECOT_PQ3D_TOKENIZER_PATH=/path/to/model_assets/clip-vit-large-patch14
 ```
 
 ## 📦 Pretrained weights
@@ -107,7 +115,7 @@ To reproduce paper-level performance, the following checkpoints are needed:
 2. PQ3D PointNet++ tokenizer (`pointnet_tokenizer.pth`) → set `SCENECOT_POINTNET_TOKENIZER_PATH`
 3. Query3D/SceneVerse pretrain (`pytorch_model.bin`) → set `SCENECOT_QUERY3D_PRETRAIN_PATH`
 
-If 2/3 are unset, related modules are initialized without those pretrained weights, which may significantly affect final metrics.
+By default, 2/3 are resolved under `SCENECOT_MODEL_ROOT`. If files are absent, related modules are initialized without those pretrained weights, which may significantly affect final metrics.
 
 ## 🌐 External services
 
@@ -129,8 +137,25 @@ export HF_HOME=/path/to/hf_cache
 ## 📁 Data preparation
 
 1. Download released dataset assets from [SceneCOT dataset](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main).
-2. Download released checkpoints from [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main).
-3. Ensure 3D point-cloud assets required by your selected task/evaluator are present (for PQ3D-based runs, missing point cloud files will break full reproduction).
+2. Place all downloaded data under one root directory, for example:
+
+  `/path/to/data_assets`
+
+3. Set:
+```shell
+export SCENECOT_DATA_ROOT=/path/to/data_assets
+```
+
+4. `configs/data/default.yaml` resolves paths from `SCENECOT_DATA_ROOT` as:
+
+  - `${SCENECOT_DATA_ROOT}/SceneVerse` → `data.sceneverse_base`
+  - `${SCENECOT_DATA_ROOT}/leo2-cot` → `data.cot_annotation_base`
+  - `${SCENECOT_DATA_ROOT}/scan_family` → `data.scan_family_base`
+  - `${SCENECOT_DATA_ROOT}/LEO-2_feature/ScanNet` → `data.obj_feat_2d_base.ScanNet`
+  - `${SCENECOT_DATA_ROOT}/scene-verse-pred-all/ScanNet` → `data.obj_feat_base.ScanNet`
+  - `${SCENECOT_DATA_ROOT}/scenecot_imgs/imgs/scannet` → `data.obj_img_base.ScanNet`
+
+5. Download released checkpoints from [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main), and set optional PQ3D checkpoint envs if available.
 
 ## 🕹 Training and evaluation
 

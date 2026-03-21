@@ -1,4 +1,31 @@
 #!/bin/bash
+
+# ------------------------------
+# Reproducibility env settings
+# ------------------------------
+export SCENECOT_EXP_ROOT=${SCENECOT_EXP_ROOT:-./outputs}
+export SCENECOT_DATA_ROOT=${SCENECOT_DATA_ROOT:-./data_assets}
+export HF_HOME=${HF_HOME:-./.cache/huggingface}
+
+# model sources
+export SCENECOT_LLM_PATH=${SCENECOT_LLM_PATH:-liuhaotian/llava-v1.5-7b}
+export SCENECOT_VISION_TOWER_PATH=${SCENECOT_VISION_TOWER_PATH:-openai/clip-vit-large-patch14-336}
+export SCENECOT_PQ3D_TOKENIZER_PATH=${SCENECOT_PQ3D_TOKENIZER_PATH:-openai/clip-vit-large-patch14}
+
+# optional PQ3D checkpoints
+export SCENECOT_POINTNET_TOKENIZER_PATH=${SCENECOT_POINTNET_TOKENIZER_PATH:-}
+export SCENECOT_QUERY3D_PRETRAIN_PATH=${SCENECOT_QUERY3D_PRETRAIN_PATH:-}
+
+# optional eval/model paths
+export SCENECOT_EXPERT1_PATH=${SCENECOT_EXPERT1_PATH:-}
+export SCENECOT_EXPERT2_PATH=${SCENECOT_EXPERT2_PATH:-}
+export SCENECOT_PRETRAINED_CKPT_PATH=${SCENECOT_PRETRAINED_CKPT_PATH:-}
+export SCENECOT_MSR3D_ANNO_DIR=${SCENECOT_MSR3D_ANNO_DIR:-${SCENECOT_DATA_ROOT}/cotqa/msqa/scannet/pure_txt}
+export SCENECOT_GQA3D_ANNO_DIR=${SCENECOT_GQA3D_ANNO_DIR:-${SCENECOT_DATA_ROOT}/leo2-cot/cotqa/gqa3d}
+
+# optional logging mode (set to online if needed)
+export WANDB_MODE=${WANDB_MODE:-disabled}
+
 CUDA_LAUNCH_BLOCKING=1 python launch.py --name scene_cot \
                  --qos lv0b \
                  --mem_per_gpu 100 \
@@ -36,14 +63,14 @@ CUDA_LAUNCH_BLOCKING=1 python launch.py --name scene_cot \
                 data.cotqa.gqa3d.pc_type=gt \
                 data.nms_iou_threshold=1 \
                 data.cotqa.use_pred_for_train=False \
-                data.cotqa.msr3d.anno_dir="" \
-                data.cotqa.gqa3d.anno_dir="" \
+                data.cotqa.msr3d.anno_dir=${SCENECOT_MSR3D_ANNO_DIR} \
+                data.cotqa.gqa3d.anno_dir=${SCENECOT_GQA3D_ANNO_DIR} \
                 dataloader.train.batchsize=2 \
                 dataloader.eval.batchsize=2 \
                 dataloader.eval.num_workers=1 \
                 ++moe.enable=True \
-                ++moe.expert1_path="" \
-                ++moe.expert2_path="" \
+                ++moe.expert1_path=${SCENECOT_EXPERT1_PATH} \
+                ++moe.expert2_path=${SCENECOT_EXPERT2_PATH} \
                 ++moe.expert1_trigger_types="[counting,existence]" \
-                pretrained_ckpt_path="" \
+                pretrained_ckpt_path=${SCENECOT_PRETRAINED_CKPT_PATH} \
                 mode=test
