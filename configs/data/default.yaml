@@ -1,6 +1,12 @@
 sceneverse_base: ${oc.env:SCENECOT_DATA_ROOT,./data_assets}/SceneVerse
 cot_annotation_base: ${oc.env:SCENECOT_DATA_ROOT,./data_assets}/leo2-cot
 
+# Clear COT dataset root (HF layout): ${SCENECOT_COT_DATA_ROOT}/MSQA and /GQA3D
+# You can override each dataset path independently via SCENECOT_MSR3D_ANNO_DIR / SCENECOT_GQA3D_ANNO_DIR.
+cot_data_root: ${oc.env:SCENECOT_COT_DATA_ROOT,${oc.env:SCENECOT_DATA_ROOT,./data_assets}/scenecot_cot_data}
+msr3d_anno_dir: ${oc.env:SCENECOT_MSR3D_ANNO_DIR,${data.cot_data_root}/MSQA}
+gqa3d_anno_dir: ${oc.env:SCENECOT_GQA3D_ANNO_DIR,${data.cot_data_root}/GQA3D}
+
 mmscan_inst_mask_base: ${oc.env:SCENECOT_DATA_ROOT,./data_assets}/mmscan_instance_masks
 
 scan_family_base: ${oc.env:SCENECOT_DATA_ROOT,./data_assets}/scan_family
@@ -26,7 +32,7 @@ qa:
     anno_dir: ${data.cot_annotation_base}/cotqa/scanqa
     pc_type: gt
   msr3d:
-    anno_dir: ${data.cot_annotation_base}/cotqa/msqa/scannet/pure_txt
+    anno_dir: ${data.msr3d_anno_dir}
     pc_type: gt
 
 cotqa:
@@ -38,12 +44,12 @@ cotqa:
     label_type: gt
     use_oracle_thought: False
   msr3d:
-    anno_dir: ${data.cot_annotation_base}/cotqa/msqa/scannet/pure_txt
+    anno_dir: ${data.msr3d_anno_dir}
     pc_type: gt
     label_type: gt
     use_oracle_thought: False
   gqa3d:
-    anno_dir: ${data.cot_annotation_base}/cotqa/gqa3d
+    anno_dir: ${data.gqa3d_anno_dir}
     pc_type: pred
 
 nms_iou_threshold: 0.25

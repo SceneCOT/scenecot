@@ -87,6 +87,9 @@ The configs were updated to avoid machine-specific absolute paths. We recommend 
 |---|---|---|---|
 | `SCENECOT_EXP_ROOT` | experiment output root (`cfg.base_dir`) | `./outputs` | - |
 | `SCENECOT_DATA_ROOT` | root directory for dataset/assets used by [configs/data/default.yaml](configs/data/default.yaml) | `./data_assets` | [SceneCOT dataset](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main) |
+| `SCENECOT_COT_DATA_ROOT` | root directory for released COT annotations (`MSQA/`, `GQA3D/`) | `${SCENECOT_DATA_ROOT}/scenecot_cot_data` | [SceneCOT dataset / scenecot_cot_data](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main/scenecot_cot_data) |
+| `SCENECOT_MSR3D_ANNO_DIR` | MSQA annotation directory (contains `situated_qa_{train,val,test}_pure_txt.json`) | `${SCENECOT_COT_DATA_ROOT}/MSQA` | [MSQA](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main/scenecot_cot_data/MSQA) |
+| `SCENECOT_GQA3D_ANNO_DIR` | GQA3D annotation directory (contains `gqa3d_{train,val,test}.json`) | `${SCENECOT_COT_DATA_ROOT}/GQA3D` | [GQA3D](https://huggingface.co/datasets/EricLHK/SceneCOT/tree/main/scenecot_cot_data/GQA3D) |
 | `HF_HOME` | Hugging Face cache root (`cfg.hf_home`) | `./.cache/huggingface` | [Hugging Face Hub](https://huggingface.co/) |
 | `SCENECOT_MODEL_ROOT` | unified root directory for default model/checkpoint paths | `./model_assets` | [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main) |
 | `SCENECOT_LLM_PATH` | LLaVA model path (override) | `${SCENECOT_MODEL_ROOT}/llava-v1.5-7b` | [LLaVA-1.5-7B](https://huggingface.co/liuhaotian/llava-v1.5-7b) |
@@ -101,6 +104,9 @@ Example:
 ```shell
 export SCENECOT_EXP_ROOT=/path/to/experiments
 export SCENECOT_DATA_ROOT=/path/to/data_assets
+export SCENECOT_COT_DATA_ROOT=/path/to/data_assets/scenecot_cot_data
+export SCENECOT_MSR3D_ANNO_DIR=/path/to/data_assets/scenecot_cot_data/MSQA
+export SCENECOT_GQA3D_ANNO_DIR=/path/to/data_assets/scenecot_cot_data/GQA3D
 export HF_HOME=/path/to/hf_cache
 export SCENECOT_MODEL_ROOT=/path/to/model_assets
 
@@ -174,7 +180,26 @@ export SCENECOT_DATA_ROOT=/path/to/data_assets
   - `${SCENECOT_DATA_ROOT}/scene-verse-pred-all/ScanNet` → `data.obj_feat_base.ScanNet`
   - `${SCENECOT_DATA_ROOT}/scenecot_imgs/imgs/scannet` → `data.obj_img_base.ScanNet`
 
-5. Download released checkpoints from [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main), and set optional PQ3D checkpoint envs if available.
+5. COT annotation paths are resolved clearly as:
+
+  - `${SCENECOT_COT_DATA_ROOT}/MSQA` (or `SCENECOT_MSR3D_ANNO_DIR`) → `data.msr3d_anno_dir`, `data.cotqa.msr3d.anno_dir`
+  - `${SCENECOT_COT_DATA_ROOT}/GQA3D` (or `SCENECOT_GQA3D_ANNO_DIR`) → `data.gqa3d_anno_dir`, `data.cotqa.gqa3d.anno_dir`
+
+  Expected folder layout:
+
+  ```text
+  ${SCENECOT_COT_DATA_ROOT}/
+  ├── MSQA/
+  │   ├── situated_qa_train_pure_txt.json
+  │   ├── situated_qa_val_pure_txt.json
+  │   └── situated_qa_test_pure_txt.json
+  └── GQA3D/
+      ├── gqa3d_train.json
+      ├── gqa3d_val.json
+      └── gqa3d_test.json
+  ```
+
+6. Download released checkpoints from [SceneCOT models](https://huggingface.co/EricLHK/SceneCOT/tree/main), and set optional PQ3D checkpoint envs if available.
 
 ## 🕹 Training and evaluation
 

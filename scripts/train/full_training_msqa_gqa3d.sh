@@ -5,6 +5,7 @@
 # ------------------------------
 export SCENECOT_EXP_ROOT=${SCENECOT_EXP_ROOT:-./outputs}
 export SCENECOT_DATA_ROOT=${SCENECOT_DATA_ROOT:-./data_assets}
+export SCENECOT_COT_DATA_ROOT=${SCENECOT_COT_DATA_ROOT:-${SCENECOT_DATA_ROOT}/scenecot_cot_data}
 export HF_HOME=${HF_HOME:-./.cache/huggingface}
 
 # model sources
@@ -15,6 +16,12 @@ export SCENECOT_PQ3D_TOKENIZER_PATH=${SCENECOT_PQ3D_TOKENIZER_PATH:-openai/clip-
 # optional PQ3D checkpoints
 export SCENECOT_POINTNET_TOKENIZER_PATH=${SCENECOT_POINTNET_TOKENIZER_PATH:-}
 export SCENECOT_QUERY3D_PRETRAIN_PATH=${SCENECOT_QUERY3D_PRETRAIN_PATH:-}
+
+# optional annotation paths (HF SceneCOT COT data layout)
+# - ${SCENECOT_COT_DATA_ROOT}/MSQA contains situated_qa_{train,val,test}_pure_txt.json
+# - ${SCENECOT_COT_DATA_ROOT}/GQA3D contains gqa3d_{train,val,test}.json
+export SCENECOT_MSR3D_ANNO_DIR=${SCENECOT_MSR3D_ANNO_DIR:-${SCENECOT_COT_DATA_ROOT}/MSQA}
+export SCENECOT_GQA3D_ANNO_DIR=${SCENECOT_GQA3D_ANNO_DIR:-${SCENECOT_COT_DATA_ROOT}/GQA3D}
 
 # optional logging mode (set to online if needed)
 export WANDB_MODE=${WANDB_MODE:-disabled}
@@ -56,8 +63,8 @@ CUDA_LAUNCH_BLOCKING=1 python launch.py --name scene_cot \
                 data.cotqa.gqa3d.pc_type=gt \
                 data.nms_iou_threshold=1 \
                 data.cotqa.use_pred_for_train=False \
-                data.cotqa.msr3d.anno_dir=${SCENECOT_DATA_ROOT}/msqa/scannet/pure_txt/cot_data/full_set/improve_type_counting \
-                data.cotqa.gqa3d.anno_dir=${SCENECOT_DATA_ROOT}/leo2-cot/cotqa/gqa3d \
+                data.cotqa.msr3d.anno_dir=${SCENECOT_MSR3D_ANNO_DIR} \
+                data.cotqa.gqa3d.anno_dir=${SCENECOT_GQA3D_ANNO_DIR} \
                 dataloader.train.batchsize=2 \
                 dataloader.eval.batchsize=2 \
                 dataloader.eval.num_workers=1
